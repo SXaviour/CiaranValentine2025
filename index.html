@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day, Ciarán! ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply Courgette font */
+        body {
+            background-image: url('images/bg2.jpg');
+            background-size: cover; /* Ensures the image covers the entire screen */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents tiling */
+            background-attachment: fixed; /* Keeps the background in place */
+            
+            font-family: "Courgette", cursive;
+            text-align: center;
+            padding: 40px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+
+        h1 {
+            color: #e6005c;
+            font-size: 2.2rem; /* Responsive font size */
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem; /* Responsive text */
+            color: #333;
+            max-width: 90%;
+            margin: 10px auto;
+        }
+
+        .heart {
+            font-size: 50px;
+            color: red;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        button {
+            background-color: #e6005c;
+            color: white;
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #ff4081;
+        }
+
+        #message {
+            font-size: 1.5rem;
+            color: #e6005c;
+            font-weight: bold;
+            margin-top: 15px;
+            display: none;
+        }
+
+        #countdown {
+            font-size: 1.3rem;
+            color: #ff4081;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Flower animations */
+        .flower {
+            position: fixed;
+            top: -50px;
+            font-size: 25px;
+            animation: fall linear infinite;
+            color: #ff69b4;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            button {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+            #message {
+                font-size: 1.3rem;
+            }
+            #countdown {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Valentine's Day, Ciaran! ❤️</h1>
+    <p>You're the best, and I hope we have an amazing day! </p>
+    <p class="heart">💖</p>
+    <button onclick="showSurprise()">Click for a Surprise</button>
+    <p id="message">See you at 3:30, can't wait! 💕</p>
+    <p id="countdown"></p>
+
+    <script>
+        function showSurprise() {
+            document.getElementById("message").style.display = "block";
+            document.getElementById("countdown").style.display = "block";
+            startCountdown();
+
+            for (let i = 0; i < 50; i++) {
+                let flower = document.createElement("div");
+                flower.innerHTML = "🌸";
+                flower.classList.add("flower");
+                document.body.appendChild(flower);
+
+                let startX = Math.random() * window.innerWidth;
+                let delay = Math.random() * 2;
+                let duration = Math.random() * 3 + 3;
+
+                flower.style.left = startX + "px";
+                flower.style.animationDuration = duration + "s";
+                flower.style.animationDelay = delay + "s";
+
+                setTimeout(() => {
+                    flower.remove();
+                }, duration * 1000);
+            }
+        }
+
+        function startCountdown() {
+            const now = new Date();
+            const targetTime = new Date();
+            targetTime.setHours(15, 30, 0, 0); // 3:30 PM
+
+            if (now > targetTime) {
+                targetTime.setDate(targetTime.getDate() + 1); // Move to tomorrow if past the time
+            }
+
+            function updateCountdown() {
+                const currentTime = new Date();
+                const diff = targetTime - currentTime;
+
+                if (diff <= 0) {
+                    document.getElementById("countdown").innerHTML = "It's time! 💖";
+                    clearInterval(interval);
+                    return;
+                }
+
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = `⏳ ${hours}h ${minutes}m ${seconds}s left! 💕`;
+            }
+
+            updateCountdown(); // Initial call to avoid delay
+            const interval = setInterval(updateCountdown, 1000);
+        }
+    </script>
+</body>
+</html>
